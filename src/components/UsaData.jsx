@@ -49,7 +49,7 @@ const USAList = () => {
         <ul className="max-h-500">
           {contacts.map((contact, index) =>
             (showEvenIds && index % 2 === 0) || !showEvenIds ? (
-              <li key={index} >{contact?.country?.name} <button className="details_btn" onClick={()=> detailsHandler(contact?.country?.name)}>DETAILS</button></li>
+              <li className="mb-2" key={index} >{contact?.country?.name} <button className="btn btn-sm btn-outline-primary" onClick={()=> detailsHandler(contact?.country?.name)}>DETAILS</button></li>
             ) : null
           )}
         </ul>
