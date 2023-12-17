@@ -14,6 +14,7 @@ const Problem1 = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  
   // SUBMIT HANDLER 
   const handleSubmit = (e) => {
     e.preventDefault();
