@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from "react";
+import DetailsModal from "./DetailsModal";
 
 const AllCountryList = () => {
   const [contacts, setContacts] = useState([]);
   const [showEvenIds, setShowEvenIds] = useState(false);
+  const [countryName, setCountryName] = useState(false);
+  const [detailsShow, setDetailsShow] = useState(false);
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleClose = () => {
+    setDetailsShow(false);
+  };
+
+  const handleSaveChanges = () => {
+    handleClose();
+    setDetailsShow();
+  };
 
   const fetchData = () => {
     fetch("https://contact.mediusware.com/api/contacts/")
@@ -23,30 +35,48 @@ const AllCountryList = () => {
   const handleCheckboxChange = () => {
     setShowEvenIds(!showEvenIds);
   };
+  const detailsHandler = (countryName) => {
+    setCountryName(countryName);
+    setDetailsShow(prev => !prev);
+  };
+
 
   return (
-    <div>
-      <h2>All Country</h2>
+    <>
+      <div>
+        <h2>All Country</h2>
 
-      <ul className="max-h-500">
-        {contacts.map((contact, index) =>
-          (showEvenIds && index % 2 === 0) || !showEvenIds ? (
-            <li key={index}>{contact?.country?.name}</li>
-          ) : null
-        )}
-      </ul>
-      <div className="mt-3">
-        <label>
-          <input
-            type="checkbox"
-            checked={showEvenIds}
-            className="mr-3"
-            onChange={handleCheckboxChange}
-          />
-          Show Even IDs
-        </label>
+        <ul className="max-h-500">
+          {contacts.map((contact, index) =>
+            (showEvenIds && index % 2 === 0) || !showEvenIds ? (
+              <li  key={index}>{contact?.country?.name} <button onClick={()=> detailsHandler(contact?.country?.name)}>SHOW DETAILS</button></li>
+            ) : null
+          )}
+        </ul>
+        <div className="mt-3">
+          <label>
+            <input
+              type="checkbox"
+              checked={showEvenIds}
+              className="mr-3"
+              onChange={handleCheckboxChange}
+            />
+            Show Even IDs
+          </label>
+        </div>
       </div>
-    </div>
+                
+      {detailsShow && (
+        <DetailsModal
+          show={detailsShow}
+          handleClose={handleClose}
+          title="countryName"
+          body={countryName}
+          onClose={handleClose}
+          onSave={handleSaveChanges}
+        />
+      )}
+    </>
   );
 };
 

@@ -5,7 +5,6 @@ import AllCountryList from "./AllCountrysData";
 import USAList from "./UsaData";
 
 const CommonModal = ({isUSAShow,  isAllCountryShow ,show, handleClose, title, body, onClose, handleAllContactShow , handleCountryShow}) => {
-    console.log(isAllCountryShow)
   return (
     <Modal show={show} onHide={handleClose} animation={false}>
       <Modal.Header closeButton>
